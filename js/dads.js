@@ -6,6 +6,9 @@ pointCounter = function() {
     setInterval(function () {
         pointTotal = pointTotal + 10;
         $(htmlCounter).html(pointTotal);
+        if (pointTotal % 100 === 0  ) {
+            writeMessage();
+        }
     }, 500);
 }
 
@@ -15,12 +18,9 @@ var loadDadsOnlyAudioTimeout;
 var loadPressSpacebarTimeout;
 
 animateDadsOnly = function() {
-
     $('.dads-only').addClass('dads-only-final');
     $('.dads-only-final').removeClass('dads-only');
     loadDadsOnlyTimeout = window.setTimeout(dadsOnlyAudio, 1000);
-
-
 }
 
 // loadDadsOnly = function(event){
@@ -44,9 +44,7 @@ loadPressSpacebar = function() {
     $('.press-space').fadeIn('slow');
 }
 
-
 loadFireworks = function() {
-
     $('.firework').each(function(){
         fireworksSize = Math.random() * (100 - 20) + 20;
         this.style.top = (Math.random()*500) + 'px';
@@ -55,23 +53,20 @@ loadFireworks = function() {
         $(this).css('background-size', fireworksSize);
         this.style.width = fireworksSize + 'px';
         this.style.height = fireworksSize + 'px';
-    })
+    });
 }
 
 window.setInterval(function(){
-  loadFireworks();
+    loadFireworks();
 }, 1000);
 
 openingScene = function(event) {
     if(event == 'remove') {
         $('.dance-logo').fadeOut('fast');
         $('.press-space').fadeOut('fast');
-
     } else {
-
         loadDadsOnlyTimeout = window.setTimeout(animateDadsOnly, 1500);
         loadPressSpacebarTimeout = window.setTimeout(loadPressSpacebar, 3500);
-
     }
 }
 
@@ -82,7 +77,6 @@ selectPlayerScene = function(event) {
     } else {
         loadPlayers();
         $('.select-instructions').fadeIn('fast');
-
     }
 }
 
@@ -91,23 +85,16 @@ loadPlayers = function(){
     if(typeof players == "undefined"){
 
         player1 = s.image('img/dad0.jpg', '33.333%','5%',100,100);
-
         player2 = s.image('img/dad1.jpg', '66.666%','5%',100,100);
-
         player3 = s.image('img/dad2.jpg', '99.999%','5%',100,100);
-
         player4 = s.image('img/dad3.jpg', '133.333%','5%',100,100);
-
 
         playerGroup = s.paper.g();
         playerGroup.add(player1, player2, player3, player4);
-
         playerGroup.attr({class: 'players'});
-
     } else {
         console.log('players already exist');
     }
-
     determineCurrentPlayer();
 }
 
@@ -120,7 +107,6 @@ calculateOffset = function(direction) {
     } else if (direction == 'right' && offset <= 400) {
         offset = offset - 100;
     }
-
     if(offset >= 300){
         offset = 300;
     } else if (offset <= 0) {
@@ -139,8 +125,6 @@ rotatePlayers = function(direction){
     dadScrollAudio();
     determineCurrentPlayer();
 }
-
-
 
 determineCurrentPlayer = function() {
 
@@ -177,11 +161,11 @@ var volumeStatus = 'on';
 mambo5 = new Audio('audio/mambo5.mp3');
 
 danceAudio = function(status) {
-
     if(volumeStatus == 'off' || status == 'off') {
         console.log('volume is off so no mambo 5');
         mambo5.volume = 0;
     } else {
+        mambo5.loop = true;
         mambo5.play();
         mambo5.volume = 1;
     }
@@ -262,35 +246,69 @@ $(document).ready(function(){
     volumeToggle();
 });
 
-
-
 switchToDanceScene = function(){
-        determineSelectedPlayer();
-        selectPlayerScene('remove');
-        $('.select-player-scene').fadeOut('fast');
-        $('.dance-scene').fadeIn('fast');
-        pointCounter();
-        danceAudio();
+    determineSelectedPlayer();
+    selectPlayerScene('remove');
+    $('.select-player-scene').fadeOut('fast');
+    $('.dance-scene').fadeIn('fast');
+    pointCounter();
+    danceAudio();
+
+    window.setInterval(function(){
+
+      trackAnxiety();
+    }, 10);
 }
+
+var anxietyLevel = 0;
+
+trackAnxiety = function(){
+    anxietyLevel = anxietyLevel + .01;
+    $('.anxiety-level').css('width', anxietyLevel * 10 + '%');
+    if (anxietyLevel > 10) {
+      // switchToPartysOverScene();
+    }
+}
+
+writeMessage = function() {
+    messages = [
+        '<p>Cool!</p>',
+        '<p>Nice moves!</p>',
+        '<p>You\'re doing it!</p>'
+    ]
+    $('.messages').append(messages[Math.floor(Math.random() * Math.floor(messages.length))]);
+    setTimeout(function() { $('.messages').empty() }, 2000);
+}
+
+switchToPartysOverScene = function() {
+    $('.dance-scene').fadeOut('fast');
+    $('.partys-over-scene').fadeIn('fast');
+}
+
+// CONTROLS
 
 var loadDancingTimeout;
 
 $(document).keydown(function(e){
-
-    if (e.keyCode==32) {
+    if (e.keyCode==32) { //spacebar
         openingScene('remove');
         // loadDadsOnly('remove');
         selectPlayerScene('load');
         $('.title-scene').hide();
         titleSongAudio('off');
         currentScene = 'selectscene';
-    } else if (e.keyCode==39) {
+    } else if (e.keyCode==39) { // right arrow
         rotatePlayers('left');
-    } else if (e.keyCode==37) {
+    } else if (e.keyCode==37) { // left arrow
         rotatePlayers('right');
-    } else if (e.keyCode==13) {
+    } else if (e.keyCode==13) { // return key
         dadSelectAudio();
         currentScene = 'dancescene';
         loadDancingTimeout = window.setTimeout(switchToDanceScene, 700);
+    } else if (e.keyCode==68) { // D key
+        if (anxietyLevel > 0) {
+            anxietyLevel = anxietyLevel - 1;
+        }
+
     }
 });

@@ -3,7 +3,7 @@ body {
 	margin: 0;
 	font-family: 'Press Start 2P', cursive;
 	color: #5ab744;
-	background-color: #cacaca;
+	background-color: #000000;
 	position: relative;
 }
 
@@ -11,7 +11,7 @@ body {
 	width: 100%;
 	max-width: 1000px;
 	height: 650px;
-	margin: 0 auto;
+	margin: 20px auto;
 	background-color: #000;
 	position: relative;
 }
@@ -123,6 +123,28 @@ body {
 	font-size: 24px;
 }
 
+.anxiety-tracker {
+	margin: 10px auto;
+	height: 30px;
+	width: 400px;
+	border: 5px solid #5ab744;
+	font-size: 24px;
+	top: 30px;
+	position: relative;
+	z-index: 100;
+}
+
+.anxiety-level {
+	height: 30px;
+	/* background-color: #8bcf69; */
+	background: linear-gradient(
+	  90deg,
+	  #c8ffc9,
+	  #8bcf69
+	);
+}
+
+
 .volume-icon {
 	position: absolute;
 	left: 40px;
@@ -167,6 +189,7 @@ body {
 	display: none;
 	width: 100%;
 	height: 100%;
+	position: relative;
 }
 
 .title-scene {
@@ -174,8 +197,28 @@ body {
 	height: 100%;
 }
 
+.partys-over-scene {
+	display: none;
+	width: 100%;
+	height: 100%;
+	position: relative;
+	font-size: 70px;
+	top: 30%;
+	text-align: center;
+}
+
 .dad.active-dad {
 	display: block;
+}
+
+.messages {
+	width: 400px;
+	top: 100px;
+	position: absolute;
+	right:0;
+	font-size: 20px;
+	text-align: center;
+	z-index: 100;
 }
 
 body > svg {

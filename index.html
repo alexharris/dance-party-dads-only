@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Snap</title>
+
+        <link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src="js/lib/snap.svg.js"></script>
+        <script src="js/dads.js"></script>
+        <link rel="stylesheet" href="css/styles.css">
+
+    </head>
+    <body>
+        <div class="viewport">
+            <div class="volume-icon"></div>
+            <div class="title-scene">
+                <img class="dads-only" src="img/dads-only.png" />
+                <img class="dance-logo" src="img/dance-party.png" />
+                <div class="press-space instructions">PRESS SPACE TO START</div>
+            </div>
+            <div class="select-player-scene">
+                 <svg x="0px" y="0px" viewBox="0 0 300 105" xml:space="preserve" class="gameplay"></svg>
+                 <div class="select-instructions instructions">USE ARROWS TO SELECT DAD.<br /><br />HIT ENTER TO BEGIN GAME.</div>
+            </div>
+            <div class='dance-scene'>
+                <div class="point-counter"></div>
+                <img src="img/dad0.gif" class="dad" id="dad0" />
+                <img src="img/dad1.gif" class="dad" id="dad1" />
+                <img src="img/dad2.gif" class="dad" id="dad2" />
+                <img src="img/dad3.gif" class="dad" id="dad3" />
+            </div>
+        </div>
+    </body>
+</html>

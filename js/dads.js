@@ -47,10 +47,6 @@ loadPressSpacebar = function() {
 
 loadFireworks = function() {
 
-    // for (var i = 0; i < 8; i++) {
-    //     setTimeout($('.fireworks').append('<div class="firework"></div>'));
-    // }
-
     $('.firework').each(function(){
         fireworksSize = Math.random() * (100 - 20) + 20;
         this.style.top = (Math.random()*500) + 'px';
@@ -60,8 +56,6 @@ loadFireworks = function() {
         this.style.width = fireworksSize + 'px';
         this.style.height = fireworksSize + 'px';
     })
-
-
 }
 
 window.setInterval(function(){

@@ -44,12 +44,37 @@ loadPressSpacebar = function() {
     $('.press-space').fadeIn('slow');
 }
 
+
+loadFireworks = function() {
+
+    // for (var i = 0; i < 8; i++) {
+    //     setTimeout($('.fireworks').append('<div class="firework"></div>'));
+    // }
+
+    $('.firework').each(function(){
+        fireworksSize = Math.random() * (100 - 20) + 20;
+        this.style.top = (Math.random()*500) + 'px';
+        this.style.left = (Math.random()*900) + 'px';
+        this.style.opacity = Math.round(Math.random());
+        $(this).css('background-size', fireworksSize);
+        this.style.width = fireworksSize + 'px';
+        this.style.height = fireworksSize + 'px';
+    })
+
+
+}
+
+window.setInterval(function(){
+  loadFireworks();
+}, 1000);
+
 openingScene = function(event) {
     if(event == 'remove') {
         $('.dance-logo').fadeOut('fast');
         $('.press-space').fadeOut('fast');
 
     } else {
+
         loadDadsOnlyTimeout = window.setTimeout(animateDadsOnly, 1500);
         loadPressSpacebarTimeout = window.setTimeout(loadPressSpacebar, 3500);
 

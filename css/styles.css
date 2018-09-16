@@ -154,6 +154,7 @@ body {
 	background-repeat: no-repeat;
 	width: 50px;
 	height: 30px;
+	z-index: 200;
 }
 
 .volume-icon.volume-off {
@@ -205,6 +206,11 @@ body {
 	font-size: 70px;
 	top: 30%;
 	text-align: center;
+}
+
+.partys-over-scene p {
+	font-size: 30px;
+	line-height: 2em;
 }
 
 .dad.active-dad {

@@ -1,15 +1,23 @@
 var currentScene = 'titlescene';
+var pointTotal;
+var finalPoints;
 
-pointCounter = function() {
+pointCounter = function(event) {
     pointTotal = 0;
     htmlCounter = $('.point-counter');
-    setInterval(function () {
-        pointTotal = pointTotal + 10;
-        $(htmlCounter).html(pointTotal);
-        if (pointTotal % 100 === 0  ) {
-            writeMessage();
-        }
-    }, 500);
+    if(event == 'gameover') {
+        clearInterval(countPoints);
+        clearInterval(anxietyInterval);
+        $(htmlCounter).html('');
+    } else {
+        countPoints = setInterval(function () {
+            pointTotal = pointTotal + 10;
+            $(htmlCounter).html(pointTotal);
+            if (pointTotal % 100 === 0  ) {
+                writeMessage();
+            }
+        }, 500);
+    }
 }
 
 var dads; // generated SVG for dads only animation
@@ -64,7 +72,9 @@ openingScene = function(event) {
     if(event == 'remove') {
         $('.dance-logo').fadeOut('fast');
         $('.press-space').fadeOut('fast');
+        $('.title-scene').hide();
     } else {
+        $('.title-scene').show();
         loadDadsOnlyTimeout = window.setTimeout(animateDadsOnly, 1500);
         loadPressSpacebarTimeout = window.setTimeout(loadPressSpacebar, 3500);
     }
@@ -76,13 +86,14 @@ selectPlayerScene = function(event) {
         $('.select-instructions').fadeOut('fast');
     } else {
         loadPlayers();
+        $('.select-player-scene').show();
         $('.select-instructions').fadeIn('fast');
     }
 }
 
 loadPlayers = function(){
 
-    if(typeof players == "undefined"){
+    // if(typeof players == "undefined"){
 
         player1 = s.image('img/dad0.jpg', '33.333%','5%',100,100);
         player2 = s.image('img/dad1.jpg', '66.666%','5%',100,100);
@@ -92,9 +103,9 @@ loadPlayers = function(){
         playerGroup = s.paper.g();
         playerGroup.add(player1, player2, player3, player4);
         playerGroup.attr({class: 'players'});
-    } else {
-        console.log('players already exist');
-    }
+    // } else {
+    //     console.log('players already exist');
+    // }
     determineCurrentPlayer();
 }
 
@@ -239,6 +250,17 @@ volumeToggle = function() {
     });
 }
 
+playAgain = function() {
+    $('.play-again').click(function() {
+        var currentScene = 'titlescene';
+        $('.partys-over-scene').hide()
+        openingScene();
+        titleSongAudio();
+    });
+};
+
+
+
 $(document).ready(function(){
     s = Snap.select(".gameplay");
     openingScene();
@@ -246,35 +268,48 @@ $(document).ready(function(){
     volumeToggle();
 });
 
+
+
+
 switchToDanceScene = function(){
     determineSelectedPlayer();
     selectPlayerScene('remove');
     $('.select-player-scene').fadeOut('fast');
     $('.dance-scene').fadeIn('fast');
-    pointCounter();
     danceAudio();
-
-    window.setInterval(function(){
-
-      trackAnxiety();
-    }, 10);
+    trackAnxiety(0);
 }
 
-var anxietyLevel = 0;
 
-trackAnxiety = function(){
-    anxietyLevel = anxietyLevel + .01;
-    $('.anxiety-level').css('width', anxietyLevel * 10 + '%');
-    if (anxietyLevel > 10) {
-      // switchToPartysOverScene();
+var anxietyLevel;
+
+trackAnxiety = function(startingLevel){
+
+    if(startingLevel !== undefined) {
+
+        anxietyLevel = startingLevel;
+        console.log(anxietyLevel);
     }
+
+    anxietyInterval = window.setInterval(function(){
+        anxietyLevel = anxietyLevel + .01;
+        $('.anxiety-level').css('width', anxietyLevel * 10 + '%');
+
+        if (anxietyLevel > 10) {
+          switchToPartysOverScene();
+          pointCounter('gameover');
+        }
+
+    }, 10);
+
 }
 
 writeMessage = function() {
     messages = [
         '<p>Cool!</p>',
         '<p>Nice moves!</p>',
-        '<p>You\'re doing it!</p>'
+        '<p>You\'re doing it!</p>',
+        '<p>More like Mambo Number 5000!</p>'
     ]
     $('.messages').append(messages[Math.floor(Math.random() * Math.floor(messages.length))]);
     setTimeout(function() { $('.messages').empty() }, 2000);
@@ -283,7 +318,13 @@ writeMessage = function() {
 switchToPartysOverScene = function() {
     $('.dance-scene').fadeOut('fast');
     $('.partys-over-scene').fadeIn('fast');
+    $('.final-points').text('');
+    $('.final-points').append($('.point-counter').text());
+    danceAudio('off');
+    playAgain();
 }
+
+
 
 // CONTROLS
 
@@ -292,9 +333,7 @@ var loadDancingTimeout;
 $(document).keydown(function(e){
     if (e.keyCode==32) { //spacebar
         openingScene('remove');
-        // loadDadsOnly('remove');
         selectPlayerScene('load');
-        $('.title-scene').hide();
         titleSongAudio('off');
         currentScene = 'selectscene';
     } else if (e.keyCode==39) { // right arrow
@@ -303,8 +342,10 @@ $(document).keydown(function(e){
         rotatePlayers('right');
     } else if (e.keyCode==13) { // return key
         dadSelectAudio();
+
         currentScene = 'dancescene';
         loadDancingTimeout = window.setTimeout(switchToDanceScene, 700);
+        pointCounter();
     } else if (e.keyCode==68) { // D key
         if (anxietyLevel > 0) {
             anxietyLevel = anxietyLevel - 1;

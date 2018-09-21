@@ -95,13 +95,13 @@ loadPlayers = function(){
 
     // if(typeof players == "undefined"){
 
-        player1 = s.image('img/dad0.jpg', '33.333%','5%',100,100);
-        player2 = s.image('img/dad1.jpg', '66.666%','5%',100,100);
-        player3 = s.image('img/dad2.jpg', '99.999%','5%',100,100);
-        player4 = s.image('img/dad3.jpg', '133.333%','5%',100,100);
+        thiccDad = s.image('img/dads/thicc-dad.jpg', '33.333%','5%',100,100);
+        lonelyDad = s.image('img/dads/lonely-dad.jpg', '66.666%','5%',100,100);
+        coolDad = s.image('img/dads/cool-dad.jpg', '99.999%','5%',100,100);
+        doctorDad = s.image('img/dads/doctor-dad.jpg', '133.333%','5%',100,100);
 
         playerGroup = s.paper.g();
-        playerGroup.add(player1, player2, player3, player4);
+        playerGroup.add(thiccDad, lonelyDad, coolDad, doctorDad);
         playerGroup.attr({class: 'players'});
     // } else {
     //     console.log('players already exist');
@@ -153,15 +153,17 @@ determineCurrentPlayer = function() {
 }
 
 determineSelectedPlayer = function() {
+    // remove current dad for replays
+    $('.dad').removeClass('active-dad');
     console.log($('.current-player').attr( "id" ));
     if ($('.current-player').attr( "id" ) == 'player0') {
-        $('#dad0').addClass('active-dad');
+        $('#thicc-dad').addClass('active-dad');
     } else if ($('.current-player').attr( "id" ) == 'player1') {
-        $('#dad1').addClass('active-dad');
+        $('#lonely-dad').addClass('active-dad');
     } else if ($('.current-player').attr( "id" ) == 'player2') {
-        $('#dad2').addClass('active-dad');
+        $('#cool-dad').addClass('active-dad');
     } else if ($('.current-player').attr( "id" ) == 'player3') {
-        $('#dad3').addClass('active-dad');
+        $('#doctor-dad').addClass('active-dad');
     } else {
         console.log('no dad is chosen!')
     }

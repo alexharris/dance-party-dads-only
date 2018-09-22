@@ -152,18 +152,23 @@ determineCurrentPlayer = function() {
     })
 }
 
+var currentDancer;
+
 determineSelectedPlayer = function() {
     // remove current dad for replays
     $('.dad').removeClass('active-dad');
-    console.log($('.current-player').attr( "id" ));
     if ($('.current-player').attr( "id" ) == 'player0') {
-        $('#thicc-dad').addClass('active-dad');
+        $('.dancer').append('<img src="img/dances/stillBig.gif" />');
+        currentDancer = 'thicc'; 
     } else if ($('.current-player').attr( "id" ) == 'player1') {
-        $('#lonely-dad').addClass('active-dad');
+        $('.dancer').append('<img src="img/dances/stillLonely.gif" />');
+        currentDancer = 'lonely'; 
     } else if ($('.current-player').attr( "id" ) == 'player2') {
-        $('#cool-dad').addClass('active-dad');
+        $('.dancer').append('<img src="img/dances/stillCool.gif" />');
+        currentDancer = 'cool'; 
     } else if ($('.current-player').attr( "id" ) == 'player3') {
-        $('#doctor-dad').addClass('active-dad');
+        $('.dancer').append('<img src="img/dances/stillDoctor.gif" />');
+        currentDancer = 'doctor'; 
     } else {
         console.log('no dad is chosen!')
     }
@@ -270,16 +275,45 @@ $(document).ready(function(){
     volumeToggle();
 });
 
-
-
-
 switchToDanceScene = function(){
     determineSelectedPlayer();
     selectPlayerScene('remove');
     $('.select-player-scene').fadeOut('fast');
     $('.dance-scene').fadeIn('fast');
+    $('.dance-scene .fireworks').hide();
+}
+
+var currentlyDancing;
+
+startDancing = function() {
     danceAudio();
+    pointCounter();
     trackAnxiety(0);
+    $('.start-message').hide();
+    $('.dance-scene .fireworks').show();
+    currentlyDancing = true;
+}
+
+var currentDanceMove = -1;
+
+var thiccMoves = ['dance1Big.gif', 'dance2Big.gif', 'dance3Big.gif'];
+var lonelyMoves = ['dance1Lonely.gif', 'dance2Lonely.gif', 'dance3Lonely.gif'];
+var coolMoves = ['dance1Cool.gif', 'dance2Cool.gif', 'dance3Cool.gif'];
+var doctorMoves = ['dance1Doctor.gif', 'dance2Doctor.gif', 'dance3Doctor.gif'];
+
+
+switchDanceMoves = function() {
+    $('.dancer').empty();
+    if(currentDancer == 'thicc'){
+        $('.dancer').append('<img src="img/dances/' + thiccMoves[currentDanceMove] + '" />');
+    } else  if(currentDancer == 'lonely'){
+        $('.dancer').append('<img src="img/dances/' + lonelyMoves[currentDanceMove] + '" />');
+    } else  if(currentDancer == 'cool'){
+        $('.dancer').append('<img src="img/dances/' + coolMoves[currentDanceMove] + '" />');
+    } else  if(currentDancer == 'doctor'){
+        $('.dancer').append('<img src="img/dances/' + doctorMoves[currentDanceMove] + '" />');
+    } 
+    
 }
 
 
@@ -288,21 +322,19 @@ var anxietyLevel;
 trackAnxiety = function(startingLevel){
 
     if(startingLevel !== undefined) {
-
         anxietyLevel = startingLevel;
-        console.log(anxietyLevel);
     }
 
     anxietyInterval = window.setInterval(function(){
         anxietyLevel = anxietyLevel + .01;
         $('.anxiety-level').css('width', anxietyLevel * 10 + '%');
 
-        if (anxietyLevel > 10) {
+        if (anxietyLevel > 1) {
           switchToPartysOverScene();
           pointCounter('gameover');
         }
 
-    }, 10);
+    }, 20);
 
 }
 
@@ -331,27 +363,36 @@ switchToPartysOverScene = function() {
 // CONTROLS
 
 var loadDancingTimeout;
+var dKeyPressed;
 
 $(document).keydown(function(e){
-    if (e.keyCode==32) { //spacebar
+    if (e.keyCode==32 && currentScene=='titlescene') { //spacebar
         openingScene('remove');
         selectPlayerScene('load');
         titleSongAudio('off');
         currentScene = 'selectscene';
-    } else if (e.keyCode==39) { // right arrow
+    } else if (e.keyCode==39 && currentScene=='selectscene') { // right arrow
         rotatePlayers('left');
-    } else if (e.keyCode==37) { // left arrow
+    } else if (e.keyCode==37 && currentScene=='selectscene') { // left arrow
         rotatePlayers('right');
-    } else if (e.keyCode==13) { // return key
+    } else if (e.keyCode==13 && currentScene=='selectscene') { // return key
         dadSelectAudio();
-
         currentScene = 'dancescene';
         loadDancingTimeout = window.setTimeout(switchToDanceScene, 700);
-        pointCounter();
-    } else if (e.keyCode==68) { // D key
-        if (anxietyLevel > 0) {
-            anxietyLevel = anxietyLevel - 1;
+    } else if (e.keyCode==68 && currentScene=='dancescene') { // D key
+        if (dKeyPressed == true) {
+            if (anxietyLevel > 0) {
+                anxietyLevel = anxietyLevel - 1;
+            }
+        } else {
+            startDancing();
+            dKeyPressed = true;
         }
-
+    } else if (e.keyCode==83 && currentScene=='dancescene' && currentlyDancing == true) { // S key
+        currentDanceMove = currentDanceMove + 1;
+        if (currentDanceMove >= 3) {
+            currentDanceMove = 0;
+        }
+        switchDanceMoves();
     }
 });

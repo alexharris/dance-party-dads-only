@@ -28,17 +28,15 @@
             </div>
             <div class="select-player-scene">
                  <svg x="0px" y="0px" viewBox="0 0 300 105" xml:space="preserve" class="gameplay"></svg>
-                 <div class="select-instructions instructions">USE ARROWS TO SELECT DAD.<br /><br />HIT ENTER TO BEGIN GAME.<br /><br />PRESS D TO KEEP DANCING.</div>
+                 <div class="select-instructions instructions">USE ARROWS TO SELECT DAD.<br /><br />HIT ENTER TO BEGIN GAME.</div>
             </div>
             <div class='dance-scene'>
-                <div class="anxiety-tracker">
+                <!-- <div class="anxiety-tracker">
                     <div class="anxiety-level"></div>
-                </div>
+                </div> -->
                 <div class="point-counter"></div>
-                <img src="img/dances/dance1Big.gif" class="dad" id="thicc-dad" />
-                <img src="img/dances/dance1Cool.gif" class="dad" id="cool-dad" />
-                <img src="img/dances/dance1Lonely.gif" class="dad" id="lonely-dad" />
-                <img src="img/dances/dance1Doctor.gif" class="dad" id="doctor-dad" />
+
+                <div class="dancer"></div>
                 <div class="fireworks">
                     <div class="firework"></div>
                     <div class="firework"></div>
@@ -47,12 +45,13 @@
                     <div class="firework"></div>
                 </div>
                 <div class="messages">
+                    <p class="start-message">Press D to dance, and S to switch moves. Don't stop dancing!</p>
                 </div>
             </div>
             <div class='partys-over-scene'>
                 PARTY'S OVER
                 <p class="final-score">Final score: <span class="final-points"></span></p>
-                <p class="play-again">play again</p>
+                <p class="play-again"><a href="">play again</a></p>
             </div>
     </body>
 </html>

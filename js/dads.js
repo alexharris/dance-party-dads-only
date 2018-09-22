@@ -292,6 +292,7 @@ startDancing = function() {
     $('.start-message').hide();
     $('.dance-scene .fireworks').show();
     currentlyDancing = true;
+    switchDanceMoves();
 }
 
 var currentDanceMove = -1;
@@ -303,6 +304,10 @@ var doctorMoves = ['dance1Doctor.gif', 'dance2Doctor.gif', 'dance3Doctor.gif'];
 
 
 switchDanceMoves = function() {
+    currentDanceMove = currentDanceMove + 1;
+    if (currentDanceMove >= 3) {
+        currentDanceMove = 0;
+    }
     $('.dancer').empty();
     if(currentDancer == 'thicc'){
         $('.dancer').append('<img src="img/dances/' + thiccMoves[currentDanceMove] + '" />');
@@ -389,10 +394,7 @@ $(document).keydown(function(e){
             dKeyPressed = true;
         }
     } else if (e.keyCode==83 && currentScene=='dancescene' && currentlyDancing == true) { // S key
-        currentDanceMove = currentDanceMove + 1;
-        if (currentDanceMove >= 3) {
-            currentDanceMove = 0;
-        }
+   
         switchDanceMoves();
     }
 });

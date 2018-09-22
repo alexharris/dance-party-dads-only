@@ -13,9 +13,18 @@ pointCounter = function(event) {
         countPoints = setInterval(function () {
             pointTotal = pointTotal + 10;
             $(htmlCounter).html(pointTotal);
-            if (pointTotal % 100 === 0  ) {
+            if (pointTotal % 100 === 0) {
                 writeMessage();
+            }  
+            if (pointTotal % 300 === 0) {
+                $('.dance-scene .fireworks').show();
             }
+            if (pointTotal % 300 === 100) {
+                $('.dance-scene .fireworks').hide();
+            }
+            console.log(pointTotal % 300);
+            console.log(pointTotal % 50);
+
         }, 500);
     }
 }
@@ -290,7 +299,6 @@ startDancing = function() {
     pointCounter();
     trackAnxiety(0);
     $('.start-message').hide();
-    $('.dance-scene .fireworks').show();
     currentlyDancing = true;
     switchDanceMoves();
 }
@@ -348,7 +356,8 @@ writeMessage = function() {
         '<p>Cool!</p>',
         '<p>Nice moves!</p>',
         '<p>You\'re doing it!</p>',
-        '<p>More like Mambo Number 5000!</p>'
+        '<p>More like Mambo Number 5000!</p>',
+        '<p>Feel the mambo rhythm!</p>'
     ]
     $('.messages').append(messages[Math.floor(Math.random() * Math.floor(messages.length))]);
     setTimeout(function() { $('.messages').empty() }, 2000);
@@ -359,6 +368,7 @@ switchToPartysOverScene = function() {
     $('.partys-over-scene').fadeIn('fast');
     $('.final-points').text('');
     $('.final-points').append($('.point-counter').text());
+    currentScene = 'partysoverscene';
     danceAudio('off');
     playAgain();
 }
@@ -380,7 +390,7 @@ $(document).keydown(function(e){
         rotatePlayers('left');
     } else if (e.keyCode==37 && currentScene=='selectscene') { // left arrow
         rotatePlayers('right');
-    } else if (e.keyCode==13 && currentScene=='selectscene') { // return key
+    } else if (e.keyCode==32 && currentScene=='selectscene') { // space bar
         dadSelectAudio();
         currentScene = 'dancescene';
         loadDancingTimeout = window.setTimeout(switchToDanceScene, 700);
@@ -394,7 +404,9 @@ $(document).keydown(function(e){
             dKeyPressed = true;
         }
     } else if (e.keyCode==83 && currentScene=='dancescene' && currentlyDancing == true) { // S key
-   
         switchDanceMoves();
+    }
+    else if (e.keyCode==32 && currentScene=='partysoverscene') { // space bar
+        location.reload();
     }
 });

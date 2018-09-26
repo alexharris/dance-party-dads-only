@@ -14,8 +14,35 @@ body {
 	margin: 20px auto;
 	background-color: #000;
 	position: relative;
+
 }
 
+.dance-floor {
+	height: 100%;
+	border: 2px solid #66bb53;
+}
+
+#dashboard > div {
+	/*display: inline-block;*/
+	width: 18%;
+	float: left;
+	margin: 0 1em 0 0;
+}
+
+
+
+#dashboard div h2 {
+	font-size: 16px;
+	color: #000;
+	background-color: #66bb53;
+	padding: .2em;
+	text-align: center;
+}
+
+#dashboard p {
+	font-size: .8em;
+	line-height: 1.2em;
+}
 
 .dance-logo{
 	position: absolute;
@@ -117,31 +144,17 @@ body {
 }
 
 .point-counter {
-	position: absolute;
-	right: 40px;
-	top: 40px;
+	text-align: center;
 	font-size: 24px;
 }
 
-.anxiety-tracker {
-	margin: 10px auto;
-	height: 30px;
-	width: 400px;
-	border: 5px solid #5ab744;
-	font-size: 24px;
-	top: 30px;
-	position: relative;
-	z-index: 100;
+.sadness-tracker {
+border: 2px solid #66bb53;
 }
 
-.anxiety-level {
-	height: 30px;
-	/* background-color: #8bcf69; */
-	background: linear-gradient(
-	  90deg,
-	  #c8ffc9,
-	  #8bcf69
-	);
+.sadness-level {
+	height: 15px;
+	background: #66bb53;
 }
 
 
@@ -226,13 +239,8 @@ body {
 }
 
 .messages {
-	width: 400px;
-	top: 100px;
-	position: absolute;
-	right:0;
-	font-size: 20px;
-	line-height: 1.6em;
-	z-index: 100;
+	font-size: 1em;
+
 }
 
 body > svg {

@@ -5,18 +5,17 @@ var finalPoints;
 pointTotal = 0;
 
 pointCounter = function(event) {
-    
+
     htmlCounter = $('.point-counter');
     if( event == 'gameover' ) {
         clearInterval(countPoints);
         clearInterval(sadnessInterval);
-        $(htmlCounter).html('');
     } else if ( event == 'pause' ) {
         clearInterval(countPoints);
     } else {
         countPoints = setInterval(function () {
             pointTotal = pointTotal + 10;
-            $(htmlCounter).html(pointTotal); 
+            $(htmlCounter).html(pointTotal);
             if (pointTotal % 300 === 0) {
                 $('.dance-scene .fireworks').show();
             }
@@ -157,16 +156,16 @@ determineSelectedPlayer = function() {
     $('.dad').removeClass('active-dad');
     if ($('.current-player').attr( "id" ) == 'player0') {
         $('.dancer').append('<img src="img/dances/stillBig.gif" />');
-        currentDancer = 'thicc'; 
+        currentDancer = 'thicc';
     } else if ($('.current-player').attr( "id" ) == 'player1') {
         $('.dancer').append('<img src="img/dances/stillLonely.gif" />');
-        currentDancer = 'lonely'; 
+        currentDancer = 'lonely';
     } else if ($('.current-player').attr( "id" ) == 'player2') {
         $('.dancer').append('<img src="img/dances/stillCool.gif" />');
-        currentDancer = 'cool'; 
+        currentDancer = 'cool';
     } else if ($('.current-player').attr( "id" ) == 'player3') {
         $('.dancer').append('<img src="img/dances/stillDoctor.gif" />');
-        currentDancer = 'doctor'; 
+        currentDancer = 'doctor';
     } else {
         console.log('no dad is chosen!')
     }
@@ -314,10 +313,10 @@ var pausedStatus;
 
 pauseGame = function() {
     if (pausedStatus === 'paused') { // the game is currently paused
-        mambo5.play();  
+        mambo5.play();
         pointCounter();
         switchDanceMoves('resume');
-        pausedStatus = 'unpaused';  
+        pausedStatus = 'unpaused';
     } else { // the game is currently going
         mambo5.pause()
         pointCounter('pause');
@@ -354,10 +353,10 @@ switchDanceMoves = function(event) {
             $('.dancer').append('<img src="img/dances/' + coolMoves[currentDanceMove] + '" />');
         } else  if(currentDancer == 'doctor'){
             $('.dancer').append('<img src="img/dances/' + doctorMoves[currentDanceMove] + '" />');
-        } 
+        }
     }
 
-    
+
 }
 
 var sadnessLevel;
@@ -377,6 +376,7 @@ trackSadness = function(startingLevel){
         if (sadnessLevel > 10) {
 
           switchToPartysOverScene();
+
           pointCounter('gameover');
           $('.sadness-level').css('width', '100%');
         }
@@ -414,9 +414,11 @@ trackDancing = function(startingLevel){
         $('.dancing-level').css('width', dancingLevelLocation * 10 + '%');
 
         if (dancingLevelLocation > 10) {
-            switchToPartysOverScene();
-            pointCounter('gameover');
             $('.dancing-level').css('width', '100%');
+            pointCounter('gameover');
+            switchToPartysOverScene();
+
+
         }
 
     }, 10);
@@ -426,11 +428,10 @@ trackDancing = function(startingLevel){
 gameLevel = 'start';
 
 controlMessages = function() {
-    console.log(gameLevel);
     switch (gameLevel) {
         case 'start': // initial dancing
-            writeMessages(); 
-            setTimeout(function() { 
+            writeMessages();
+            setTimeout(function() {
                 gameLevel = 'sadness';
                 controlMessages();
             }, 10000);
@@ -438,11 +439,11 @@ controlMessages = function() {
         case 'sadness':
             console.log('we in sadness');
             clearInterval(writeMessage);
-            $('.messages').empty()    
+            pointCounter('pause');
+            $('.messages').empty() ;
             $('.messages').append('<p class="special-message">You grow bored of this dance. Press S to switch moves. Then keep tapping D. </p>');
-            $(document).keydown(function(e){ 
-                if(e.which==83 && currentScene=='dancescene' && currentlyDancing == true && gameLevel == 'sadness') { // press S key    
-                    console.log('this one');
+            $(document).keydown(function(e){
+                if(e.which==83 && currentScene=='dancescene' && currentlyDancing == true && gameLevel == 'sadness') { // press S key
                     gameLevel = 'music';
                     controlMessages();
                 }
@@ -450,6 +451,7 @@ controlMessages = function() {
             break;
         case 'music':
             console.log('we in music');
+            pointCounter();
             writeMessages();
             trackSadness(0);
             break;
@@ -460,7 +462,6 @@ controlMessages = function() {
 
 // Randomly pick a message from the array and publish in the message area
 writeMessages = function() {
-    console.log('call write messages');
     messages = [
         '<p>Cool!</p>',
         '<p>Nice moves!</p>',
@@ -470,7 +471,7 @@ writeMessages = function() {
     ]
 
     writeMessage = setInterval(function () {
-        $('.messages').empty(); 
+        $('.messages').empty();
         $('.messages').append(messages[Math.floor(Math.random() * Math.floor(messages.length))]);
     }, 5000);
 }
@@ -478,6 +479,7 @@ writeMessages = function() {
 switchToPartysOverScene = function() {
     $('.dance-scene').fadeOut('fast');
     $('.partys-over-scene').fadeIn('fast');
+    clearInterval(writeMessage);
     $('.final-points').text('');
     $('.final-points').append($('.point-counter').text());
     currentScene = 'partysoverscene';

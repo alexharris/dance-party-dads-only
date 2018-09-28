@@ -24,7 +24,7 @@ pointCounter = function(event) {
             }
         }, 500);
     }
-}
+} 
 
 var dads; // generated SVG for dads only animation
 var loadDadsOnlyTimeout; //ID for timeout for loading dads only animation
@@ -199,7 +199,7 @@ danceAudio = function(status) {
         console.log('volume is off so no mambo 5');
         mambo5.volume = 0;
     } else {
-        mambo5.loop = true;
+        // mambo5.loop = true;
         mambo5.play();
         mambo5.volume = 1;
     }
@@ -360,6 +360,7 @@ switchDanceMoves = function(event) {
 }
 
 var sadnessLevel;
+var sadnessInterval;
 
 trackSadness = function(startingLevel){
     $('.sadness-tracker').show();
@@ -378,14 +379,40 @@ trackSadness = function(startingLevel){
           switchToPartysOverScene();
 
           pointCounter('gameover');
-          $('.sadness-level').css('width', '100%');
         }
+    }, 20);
+}
+
+var songInterval;
+trackSongs = function() {
+    $('.song-tracker').show();
+    $('.song-control').show();
+
+
+
+    songInterval = window.setInterval(function(){
+
+        songPercentage = (mambo5.currentTime / mambo5.duration) * 100;
+
+        console.log(mambo5.currentTime);
+        console.log(mambo5.duration);
+
+        $('.song-level').css('width', songPercentage + '%');
+
+        if (songPercentage > 99) {
+
+            switchToPartysOverScene();
+
+            pointCounter('gameover');
+        }
+
     }, 20);
 }
 
 var dancingLevelLocation;
 var dancingMeterLocation;
 var dancingMeterDirection = 'right';
+var dancingMeterInterval;
 
 trackDancing = function(startingLevel){
 
@@ -437,23 +464,43 @@ controlMessages = function() {
             }, 10000);
             break;
         case 'sadness':
-            console.log('we in sadness');
             clearInterval(writeMessage);
             pointCounter('pause');
-            $('.messages').empty() ;
+            $('.messages').empty();
             $('.messages').append('<p class="special-message">You grow bored of this dance. Press S to switch moves. Then keep tapping D. </p>');
             $(document).keydown(function(e){
                 if(e.which==83 && currentScene=='dancescene' && currentlyDancing == true && gameLevel == 'sadness') { // press S key
-                    gameLevel = 'music';
+                    gameLevel = 'sadness2';
                     controlMessages();
                 }
             });
             break;
-        case 'music':
-            console.log('we in music');
+        case 'sadness2':
             pointCounter();
             writeMessages();
             trackSadness(0);
+            setTimeout(function() { 
+                gameLevel = 'songs';
+                controlMessages();
+            }, 10000);
+            break;
+        case 'songs':
+            clearInterval(writeMessage);
+            pointCounter('pause');
+            $('.messages').empty();
+            $('.messages').append('<p class="special-message">The song is almost over. Restart it or party\'s over.</p>');
+            $(document).keydown(function(e){
+                if(e.which==82 && currentScene=='dancescene' && currentlyDancing == true && gameLevel == 'songs') { // press R key
+                    gameLevel = 'songs2';
+                    controlMessages();
+                }
+            });
+            break;
+        case 'songs2':
+            pointCounter();
+            writeMessages();
+            trackSadness(0);
+            trackSongs();
             break;
         default:
             console.log('no game level');
@@ -483,6 +530,12 @@ switchToPartysOverScene = function() {
     $('.final-points').text('');
     $('.final-points').append($('.point-counter').text());
     currentScene = 'partysoverscene';
+    $('.sadness-level').css('width', '100%');
+    $('.song-level').css('width', '100%');
+    $('.dancing-level').css('width', '100%');
+    clearInterval(sadnessInterval);
+    clearInterval(songInterval);
+    clearInterval(dancingLevelInterval);
     danceAudio('off');
     playAgain();
 }
@@ -520,10 +573,10 @@ $(document).keydown(function(e){
         }
     } else if (e.which==83 && currentScene=='dancescene' && currentlyDancing == true) { // S key
         switchDanceMoves('switch');
-        if (sadnessLevel > 0) {
-            sadnessLevel = sadnessLevel - 1;
-        }
-
+        sadnessLevel = 0;
+    } else if (e.which==82 && currentScene=='dancescene') { // R key
+        mambo5.currentTime = 0;
+        danceAudio();
     } else if (e.which==80 && currentScene=='dancescene') { // P key
         pauseGame();
     }

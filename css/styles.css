@@ -193,7 +193,24 @@ body {
 	background: #66bb53;
 }
 
+.song-tracker {
+	display: none;
+}
+
+.song-meter {
+	border: 2px solid #66bb53;
+}
+
+.song-level {
+	height: 15px;
+	background: #66bb53;
+}
+
 .switch-control {
+	display: none;
+}
+
+.song-control {
 	display: none;
 }
 

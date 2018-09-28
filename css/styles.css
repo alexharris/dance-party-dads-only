@@ -22,6 +22,10 @@ body {
 	border: 2px solid #66bb53;
 }
 
+#dashboard {
+	border-bottom: 2px solid #66bb53;
+}
+
 #dashboard > div {
 	/*display: inline-block;*/
 	width: 18%;
@@ -32,7 +36,7 @@ body {
 
 
 #dashboard div h2 {
-	font-size: 16px;
+	font-size: 14px;
 	color: #000;
 	background-color: #66bb53;
 	padding: .2em;
@@ -148,13 +152,49 @@ body {
 	font-size: 24px;
 }
 
+.dancing-meter-bar {
+	height: 20px;
+	width: 100%;
+	border: 1px solid #66bb53;
+	background: linear-gradient(to right, red 20%, black 20%, black 80%, red 80%);
+	margin: 0 auto;
+}
+
+.dancing-level-bar {
+	height: 20px;
+	width: 100%;
+	border: 2px solid #66bb53;
+	position: relative;
+}
+
+.dancing-level {
+	height: 20px;
+	width: 0%;
+	background-color: #66bb53;
+}
+
+.dancing-meter {
+	width: 3px;
+	height: 100%;
+	background-color: #66bb53;
+	position: relative;
+}
+
 .sadness-tracker {
-border: 2px solid #66bb53;
+	display: none;
+}
+
+.sadness-meter {
+	border: 2px solid #66bb53;
 }
 
 .sadness-level {
 	height: 15px;
 	background: #66bb53;
+}
+
+.switch-control {
+	display: none;
 }
 
 

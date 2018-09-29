@@ -388,8 +388,6 @@ trackSongs = function() {
     $('.song-tracker').show();
     $('.song-control').show();
 
-
-
     songInterval = window.setInterval(function(){
 
         songPercentage = (mambo5.currentTime / mambo5.duration) * 100;
@@ -467,9 +465,9 @@ controlMessages = function() {
             clearInterval(writeMessage);
             pointCounter('pause');
             $('.messages').empty();
-            $('.messages').append('<p class="special-message">You grow bored of this dance. Press S to switch moves. Then keep tapping D. </p>');
+            $('.messages').append('<p class="special-message">You grow bored of this dance. Press N for a new move. </p>');
             $(document).keydown(function(e){
-                if(e.which==83 && currentScene=='dancescene' && currentlyDancing == true && gameLevel == 'sadness') { // press S key
+                if(e.which=78 && currentScene=='dancescene' && currentlyDancing == true && gameLevel == 'sadness') { // press S key
                     gameLevel = 'sadness2';
                     controlMessages();
                 }
@@ -489,8 +487,12 @@ controlMessages = function() {
             pointCounter('pause');
             $('.messages').empty();
             $('.messages').append('<p class="special-message">The song is almost over. Restart it or party\'s over.</p>');
+
             $(document).keydown(function(e){
-                if(e.which==82 && currentScene=='dancescene' && currentlyDancing == true && gameLevel == 'songs') { // press R key
+                // && currentlyDancing == true && gameLevel == 'songs'
+                if(e.which=82 && currentScene=='dancescene' && currentlyDancing == true && gameLevel == 'songs') { // press R key
+
+                    console.log('test3');
                     gameLevel = 'songs2';
                     controlMessages();
                 }
@@ -571,7 +573,7 @@ $(document).keydown(function(e){
             startDancing();
             dKeyPressed = true;
         }
-    } else if (e.which==83 && currentScene=='dancescene' && currentlyDancing == true) { // S key
+    } else if (e.which==78 && currentScene=='dancescene' && currentlyDancing == true) { // S key
         switchDanceMoves('switch');
         sadnessLevel = 0;
     } else if (e.which==82 && currentScene=='dancescene') { // R key

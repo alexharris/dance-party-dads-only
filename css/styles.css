@@ -155,9 +155,12 @@ body {
 .dancing-meter-bar {
 	height: 20px;
 	width: 100%;
-	border: 1px solid #66bb53;
+	border-top: 2px solid #66bb53;
 	background: linear-gradient(to right, red 20%, black 20%, black 80%, red 80%);
 	margin: 0 auto;
+	position: absolute;
+	bottom: 0;
+
 }
 
 .dancing-level-bar {
@@ -174,7 +177,7 @@ body {
 }
 
 .dancing-meter {
-	width: 3px;
+	width: 10px;
 	height: 100%;
 	background-color: #66bb53;
 	position: relative;

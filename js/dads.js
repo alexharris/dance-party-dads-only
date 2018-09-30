@@ -295,6 +295,7 @@ switchToDanceScene = function(){
     $('.select-player-scene').fadeOut('fast');
     $('.dance-scene').fadeIn('fast');
     $('.dance-scene .fireworks').hide();
+    $('.messages').append('<p class="start-message blink_me">TAP D TO KEEP DANCING</p>');
 }
 
 var currentlyDancing;
@@ -375,12 +376,14 @@ trackSadness = function(startingLevel){
         $('.sadness-level').css('width', sadnessLevel * 10 + '%');
 
         if (sadnessLevel > 10) {
-
           switchToPartysOverScene();
-
           pointCounter('gameover');
         }
     }, 20);
+
+    if(startingLevel == 'clear') {
+        clearInterval(sadnessInterval);
+    }
 }
 
 var songInterval;
@@ -391,9 +394,6 @@ trackSongs = function() {
     songInterval = window.setInterval(function(){
 
         songPercentage = (mambo5.currentTime / mambo5.duration) * 100;
-
-        console.log(mambo5.currentTime);
-        console.log(mambo5.duration);
 
         $('.song-level').css('width', songPercentage + '%');
 
@@ -409,30 +409,30 @@ trackSongs = function() {
 
 var dancingLevelLocation;
 var dancingMeterLocation;
-var dancingMeterDirection = 'right';
-var dancingMeterInterval;
+// var dancingMeterDirection = 'right';
+// var dancingMeterInterval;
 
 trackDancing = function(startingLevel){
 
     if(startingLevel !== undefined) {
-        dancingMeterLocation = startingLevel;
+        // dancingMeterLocation = startingLevel;
         dancingLevelLocation = startingLevel;
     }
 
-    dancingMeterInterval = window.setInterval(function(){
-        if (dancingMeterDirection == 'right') {
-            dancingMeterLocation = dancingMeterLocation + .5;
-            if (dancingMeterLocation >= 100) {
-                dancingMeterDirection = 'left'
-            }
-        } else {
-            dancingMeterLocation = dancingMeterLocation - .5;
-            if (dancingMeterLocation <= 0) {
-                dancingMeterDirection = 'right'
-            }
-        }
-        $('.dancing-meter').css('left', dancingMeterLocation + '%');
-    }, 10);
+    // dancingMeterInterval = window.setInterval(function(){
+    //     if (dancingMeterDirection == 'right') {
+    //         dancingMeterLocation = dancingMeterLocation + .5;
+    //         if (dancingMeterLocation >= 100) {
+    //             dancingMeterDirection = 'left'
+    //         }
+    //     } else {
+    //         dancingMeterLocation = dancingMeterLocation - .5;
+    //         if (dancingMeterLocation <= 0) {
+    //             dancingMeterDirection = 'right'
+    //         }
+    //     }
+    //     $('.dancing-meter').css('left', dancingMeterLocation + '%');
+    // }, 10);
 
     dancingLevelInterval = window.setInterval(function(){
         dancingLevelLocation = dancingLevelLocation + .01;
@@ -447,6 +447,10 @@ trackDancing = function(startingLevel){
         }
 
     }, 10);
+
+    if(startingLevel == 'clear') {
+        clearInterval(dancingLevelInterval);
+    }
 
 }
 
@@ -465,7 +469,7 @@ controlMessages = function() {
             clearInterval(writeMessage);
             pointCounter('pause');
             $('.messages').empty();
-            $('.messages').append('<p class="special-message">You grow bored of this dance. Press N for a new move. </p>');
+            $('.messages').append('<p class="special-message blink_me">You grow bored of this dance. Press N to keep the sadness away. </p>');
             $(document).keydown(function(e){
                 if(e.which=78 && currentScene=='dancescene' && currentlyDancing == true && gameLevel == 'sadness') { // press S key
                     gameLevel = 'sadness2';
@@ -480,13 +484,13 @@ controlMessages = function() {
             setTimeout(function() { 
                 gameLevel = 'songs';
                 controlMessages();
-            }, 10000);
+            }, 15000);
             break;
         case 'songs':
             clearInterval(writeMessage);
             pointCounter('pause');
             $('.messages').empty();
-            $('.messages').append('<p class="special-message">The song is almost over. Restart it or party\'s over.</p>');
+            $('.messages').append('<p class="special-message blink_me">The song is almost over. Restart it or the party\'s over.</p>');
 
             $(document).keydown(function(e){
                 // && currentlyDancing == true && gameLevel == 'songs'
@@ -522,7 +526,7 @@ writeMessages = function() {
     writeMessage = setInterval(function () {
         $('.messages').empty();
         $('.messages').append(messages[Math.floor(Math.random() * Math.floor(messages.length))]);
-    }, 5000);
+    }, 8000);
 }
 
 switchToPartysOverScene = function() {
@@ -535,9 +539,9 @@ switchToPartysOverScene = function() {
     $('.sadness-level').css('width', '100%');
     $('.song-level').css('width', '100%');
     $('.dancing-level').css('width', '100%');
-    clearInterval(sadnessInterval);
+    trackSadness('clear');
     clearInterval(songInterval);
-    clearInterval(dancingLevelInterval);
+    trackDancing('clear');
     danceAudio('off');
     playAgain();
 }

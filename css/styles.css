@@ -23,28 +23,31 @@ body {
 }
 
 #dashboard {
-	border-bottom: 2px solid #66bb53;
+	/*border-bottom: 2px solid #66bb53;*/
+	display: flex;
+	justify-content: space-between;
 }
 
 #dashboard > div {
 	/*display: inline-block;*/
 	width: 18%;
 	float: left;
-	margin: 0 1em 0 0;
+	/*margin: 0 1em 0 0;*/
 }
 
 
 
 #dashboard div h2 {
-	font-size: 14px;
+	font-size: .8em;
 	color: #000;
+	/*width: 100%;*/
 	background-color: #66bb53;
 	padding: .2em;
 	text-align: center;
 }
 
 #dashboard p {
-	font-size: .8em;
+	font-size: .7em;
 	line-height: 1.2em;
 }
 
@@ -164,19 +167,19 @@ body {
 }
 
 .dancing-level-bar {
-	height: 20px;
-	width: 100%;
+	height: 15px;
 	border: 2px solid #66bb53;
 	position: relative;
 }
 
 .dancing-level {
-	height: 20px;
+	height: 15px;
 	width: 0%;
 	background-color: #66bb53;
 }
 
 .dancing-meter {
+	height: 15px;
 	width: 10px;
 	height: 100%;
 	background-color: #66bb53;
@@ -300,7 +303,47 @@ body {
 
 .messages {
 	font-size: 1em;
+}
 
+.special-message, .start-message {
+	padding: 5px;
+	background-color: #66bb53;
+	color: #000000;
+}
+
+.blink_me {
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+
+    -moz-animation-name: blinker;
+    -moz-animation-duration: 3s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+
+    animation-name: blinker;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@-moz-keyframes blinker {  
+    /*0% { opacity: 1.0; }*/
+    50% { opacity: 0.0; }
+    /*100% { opacity: 2.0; }*/
+}
+
+@-webkit-keyframes blinker {  
+    /*0% { opacity: 1.0; }*/
+    50% { opacity: 0.0; }
+    /*100% { opacity: 2.0; }*/
+}
+
+@keyframes blinker {  
+    /*0% { opacity: 1.0; }*/
+    50% { opacity: 0.0; }
+    /*100% { opacity: 2.0; }*/
 }
 
 body > svg {

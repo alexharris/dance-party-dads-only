@@ -25,6 +25,7 @@ body {
 #dashboard {
 	/*border-bottom: 2px solid #66bb53;*/
 	display: flex;
+	flex-flow: row wrap;
 	justify-content: space-between;
 }
 
@@ -350,4 +351,49 @@ body > svg {
 	position: absolute;
 	top: 45%;
 	left: 25%;
+}
+
+#mobile-controls {
+	display: none;
+}
+
+@media only screen and (max-device-width: 480px){
+
+	#dashboard {
+		padding-bottom: 1em;
+		border-bottom: 1px solid #66bb53;
+	}
+
+	#dashboard > div {
+		width: 40%;
+		margin: 0 1em;
+		font-size: 1.8em;
+		height: 250px;
+	}
+
+	#dashboard #controls {
+		display: none;
+	}
+
+	#mobile-controls {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+	}
+
+	#mobile-controls div {
+		flex-grow: 1;
+  		min-width: 25%;
+		font-size: 2em;
+		text-align: center;
+		border: 1px solid #66bb53;
+		padding: 16px;
+	}
+
+	#mobile-controls .small {
+		display: block;
+		padding-top: 6px;
+		font-size: .6em;
+	}
+
 }

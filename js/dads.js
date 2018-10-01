@@ -605,7 +605,31 @@ writeMessages = function() {
         '<p>Nice moves!</p>',
         '<p>You\'re doing it!</p>',
         '<p>More like Mambo Number 5000!</p>',
-        '<p>Feel the mambo rhythm!</p>'
+        '<p>Feel the mambo rhythm!</p>',
+        '<p>You are the #1 dance daddy.</p>',
+        '<p>You are the master of your fate. You are the Dancing Dad.</p>',
+        '<p>All other dads bow down to you.</p>',
+        '<p>Nice moves, dad!</p>',
+        '<p>Get loose, pops!</p>',
+        '<p>You’re doing it, sir!</p>',
+        '<p>Keep going, poppie!</p>',
+        '<p>I believe in you, papa!</p>',
+        '<p>Prove the haters wrong!</p>',
+        '<p>Don\'t listen to your detractors. Just dance.</p>',
+        '<p>The journey is dancing. The destination is dance. </p>',
+        '<p>I love you, dad.</p>',
+        '<p>I love my dad.</p>',
+        '<p>All we ask is that you do your best, dad.</p>',
+        '<p>Remember high school? God, time goes by so fast.</p>',
+        '<p>If you stop, something bad will happen.</p>',
+        '<p>“Some dance to remember, some dance to forget.” - The Eagles (all dads)</p>',
+        '<p>Dance is the language of the heart. </p>',
+        '<p>Dance like nobody\'s watching and earning points for every second you continue.</p>',
+        '<p>“Yeah, I wanna dance with somebody / With somebody who loves me (my dad)” - Whitney Houston</p>',
+        '<p>Dance dance dance, etc.</p>',
+        '<p>When words will not suffice, there is always dance.</p>',
+        '<p>Let the rhythm take over.</p>',
+        '<p>Give yourself to the music.</p>'       
     ]
 
     writeMessage = setInterval(function () {

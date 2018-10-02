@@ -278,12 +278,7 @@ playAgain = function() {
     });
 };
 
-$(document).ready(function(){
-    s = Snap.select(".gameplay");
-    openingScene();
-    titleSongAudio();
-    volumeToggle();
-});
+
 
 switchToDanceScene = function(){
     determineSelectedPlayer();
@@ -551,7 +546,13 @@ controlMessages = function() {
             $('.messages').append('<p class="special-message blink_me">You grow bored of this dance. Press N to keep the sadness away. </p>');
             $(document).keydown(function(e){
                 if(e.which==78 && currentScene=='dancescene' && currentlyDancing == true && gameLevel == 'sadness') { // press N key
-                    console.log('N key pressed');
+                    gameLevel = 'sadness2';
+                    controlMessages();
+                    $('.messages').empty();
+                }
+            });
+            $(document).click(function(e){
+                if(clickedClass(e) == 'n-button' && currentScene=='dancescene' && currentlyDancing == true && gameLevel == 'sadness') { // press N key
                     gameLevel = 'sadness2';
                     controlMessages();
                     $('.messages').empty();
@@ -581,6 +582,12 @@ controlMessages = function() {
 
             $(document).keydown(function(e){
                 if(e.which==82 && currentScene=='dancescene' && currentlyDancing == true && gameLevel == 'songs') { // press R key
+                    gameLevel = 'songs2';
+                    controlMessages();
+                }
+            });
+            $(document).click(function(e){
+                if(clickedClass(e) == 'r-button' && currentScene=='dancescene' && currentlyDancing == true && gameLevel == 'songs') { // press R key
                     gameLevel = 'songs2';
                     controlMessages();
                 }
@@ -677,11 +684,7 @@ $(document).keydown(function(e){
         loadDancingTimeout = window.setTimeout(switchToDanceScene, 700);
     } else if (e.which==68 && currentScene=='dancescene' && pausedStatus !== 'paused') { // D key
         if (dKeyPressed == true) {
-        //     if (dancingMeterLocation > 80 || dancingMeterLocation < 20) {
                 dancingLevelLocation = dancingLevelLocation - 1;
-            // } else {
-            //     dancingLevelLocation = dancingLevelLocation - 1;
-            // }
         } else {
             startDancing();
             dKeyPressed = true;
@@ -700,6 +703,49 @@ $(document).keydown(function(e){
     }
 });
 
+var clickedClass = function(e) {
+    return e.originalEvent.path[0].className;
+}
+
+
+$(document).click(function(e){
+
+    if (clickedClass(e) == 'space-bar' && currentScene=='titlescene') { //spacebar
+        openingScene('remove');
+        selectPlayerScene('load');
+        titleSongAudio('off');
+        currentScene = 'selectscene';
+    } else if (e.which==39 && currentScene=='selectscene') { // right arrow
+        rotatePlayers('left');
+    } else if (e.which==37 && currentScene=='selectscene') { // left arrow
+        rotatePlayers('right');
+    } else if (clickedClass(e) == 'space-bar' && currentScene=='selectscene') { // space bar
+        dadSelectAudio();
+        currentScene = 'dancescene';
+        loadDancingTimeout = window.setTimeout(switchToDanceScene, 700);
+    } else if (clickedClass(e) == 'd-button' && currentScene=='dancescene' && pausedStatus !== 'paused') { // D key
+        if (dKeyPressed == true) {
+                dancingLevelLocation = dancingLevelLocation - 1;
+        } else {
+            startDancing();
+            dKeyPressed = true;
+        }
+    } else if (clickedClass(e) == 'n-button' && currentScene=='dancescene' && currentlyDancing == true && pausedStatus !== 'paused') { // N key
+        switchDanceMoves('switch');
+        sadnessLevel = 0;
+    } else if (clickedClass(e) == 'r-button' && currentScene=='dancescene') { // R key
+        mambo5.currentTime = 0;
+        danceAudio();
+    } else if (clickedClass(e) == 'p-button' && currentScene=='dancescene') { // P key
+        pauseGame();
+    }
+    else if (clickedClass(e) == 'space-bar' && currentScene=='partysoverscene') { // space bar
+        location.reload();
+    }
+});
+
+
+
 function Timer(callback, delay) {
     var timerId, start, remaining = delay;
 
@@ -716,3 +762,10 @@ function Timer(callback, delay) {
 
     this.resume();
 }
+
+$(document).ready(function(){
+    s = Snap.select(".gameplay");
+    openingScene();
+    titleSongAudio();
+    volumeToggle();
+});

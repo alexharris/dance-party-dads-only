@@ -704,7 +704,7 @@ $(document).keydown(function(e){
 });
 
 var clickedClass = function(e) {
-    alert(e);
+    alert(e.originalEvent.path[0].className);
     return e.originalEvent.path[0].className;
 }
 

@@ -378,16 +378,29 @@ body > svg {
 	#mobile-controls {
 	display: flex;
 	flex-flow: row wrap;
-	justify-content: flex-start;
+	/*justify-content: flex-start;*/
 	}
 
-	#mobile-controls div {
+	#mobile-controls a {
+		color: #66bb53;
+		text-decoration: none;
 		flex-grow: 1;
-  		min-width: 25%;
+  		min-width: 20%;
 		font-size: 2em;
 		text-align: center;
 		border: 1px solid #66bb53;
 		padding: 16px;
+	}
+
+	#mobile-controls a.d-button, 
+	#mobile-controls a.n-button, 
+	#mobile-controls a.r-button {
+		min-width: 25%;
+		flex-grow: 2;
+	}
+
+	#mobile-controls a:visited, #mobile-controls a:hover {
+		color: #66bb53;
 	}
 
 	#mobile-controls .small {

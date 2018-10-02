@@ -715,9 +715,9 @@ $(document).click(function(e){
         selectPlayerScene('load');
         titleSongAudio('off');
         currentScene = 'selectscene';
-    } else if (e.which==39 && currentScene=='selectscene') { // right arrow
+    } else if (clickedClass(e) == 'right-arrow' && currentScene=='selectscene') { // right arrow
         rotatePlayers('left');
-    } else if (e.which==37 && currentScene=='selectscene') { // left arrow
+    } else if (clickedClass(e) == 'left-arrow' && currentScene=='selectscene') { // left arrow
         rotatePlayers('right');
     } else if (clickedClass(e) == 'space-bar' && currentScene=='selectscene') { // space bar
         dadSelectAudio();

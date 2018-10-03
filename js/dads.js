@@ -24,7 +24,7 @@ pointCounter = function(event) {
             }
         }, 500);
     }
-} 
+}
 
 var dads; // generated SVG for dads only animation
 var loadDadsOnlyTimeout; //ID for timeout for loading dads only animation
@@ -309,7 +309,7 @@ pauseGame = function() {
         pointCounter();
         switchDanceMoves('resume');
         pausedStatus = 'unpaused';
-        
+
         trackDancing.resume();
 
         switch (gameLevel) {
@@ -324,8 +324,8 @@ pauseGame = function() {
                 trackSadness.resume();
             default:
         }
-        
-        
+
+
     } else { // the game is currently going
         // pause music
         mambo5.pause()
@@ -344,7 +344,7 @@ pauseGame = function() {
         // if there is a songs timeout, pause it
         if(songsTimer !== undefined) {
             songsTimer.pause();
-        }        
+        }
     }
 }
 
@@ -401,35 +401,34 @@ var trackSadness = {
         $('.switch-control').show();
         if(event !== undefined) {
             sadnessLevel = event;
-        } 
+        }
 
         sadnessInterval = window.setInterval(function(){
             console.log(sadnessLevel);
             sadnessLevel = sadnessLevel + .01;
-        
+
             $('.sadness-level').css('width', sadnessLevel * 10 + '%');
 
             if (sadnessLevel > 10) {
               switchToPartysOverScene();
               pointCounter('gameover');
             }
-             
+
         }, 20);
     }
 }
 
 
 var songInterval;
-trackSongs = function() {
+trackSongs = function(e) {
     $('.song-tracker').show();
     $('.song-control').show();
 
     songInterval = window.setInterval(function(){
 
-        if(event == 'pause') {
+        if(e == 'pause') {
             // do nothing because paused
         } else {
-            
             songPercentage = (mambo5.currentTime / mambo5.duration) * 100;
 
             $('.song-level').css('width', songPercentage + '%');
@@ -462,7 +461,7 @@ var trackDancing = {
             if ( event !== undefined) {
                 dancingLevelLocation = event;
             }
-    
+
             dancingLevelInterval = window.setInterval(function(){
 
                 dancingLevelLocation = dancingLevelLocation + .01;
@@ -482,7 +481,7 @@ var trackDancing = {
         }
 
         // switch (event) {
-        //     case 0: 
+        //     case 0:
         //         dancingLevelLocation = event;
         //         break;
         //     case 'clear':
@@ -564,7 +563,7 @@ controlMessages = function() {
             pointCounter();
             writeMessages();
             trackSadness.resume(0);
-            // setTimeout(function() { 
+            // setTimeout(function() {
             //     gameLevel = 'songs';
             //     controlMessages();
             // }, 15000);
@@ -636,7 +635,7 @@ writeMessages = function() {
         '<p>Dance dance dance, etc.</p>',
         '<p>When words will not suffice, there is always dance.</p>',
         '<p>Let the rhythm take over.</p>',
-        '<p>Give yourself to the music.</p>'       
+        '<p>Give yourself to the music.</p>'
     ]
 
     writeMessage = setInterval(function () {

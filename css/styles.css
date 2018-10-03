@@ -404,6 +404,11 @@ body > svg {
 		color: #66bb53;
 	}
 
+	#mobile-controls a:active {
+		color: #000000;
+		background-color: #66bb53;
+	}
+
 	#mobile-controls .small {
 		display: block;
 		padding-top: 6px;

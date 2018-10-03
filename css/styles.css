@@ -395,7 +395,7 @@ body > svg {
 	#mobile-controls a.d-button,
 	#mobile-controls a.n-button,
 	#mobile-controls a.r-button {
-		height: 60px;
+		height: 100px;
 		min-width: 25%;
 		flex-grow: 2;
 	}

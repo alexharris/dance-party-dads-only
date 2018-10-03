@@ -707,7 +707,7 @@ var clickedClass = function(e) {
 }
 
 
-$(document).click(function(e){
+$(document).on('touchstart', function(e){
 
     if (clickedClass(e) == 'space-bar' && currentScene=='titlescene') { //spacebar
         openingScene('remove');

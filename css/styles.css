@@ -390,7 +390,7 @@ body > svg {
 		text-align: center;
 		border: 1px solid #66bb53;
 		padding: 16px;
-		touch-action: none;
+		/*touch-action: none;*/
 	}
 
 	#mobile-controls a.d-button,

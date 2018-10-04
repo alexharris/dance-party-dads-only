@@ -684,7 +684,9 @@ $(document).keydown(function(e){
         loadDancingTimeout = window.setTimeout(switchToDanceScene, 700);
     } else if (e.which==68 && currentScene=='dancescene' && pausedStatus !== 'paused') { // D key
         if (dKeyPressed == true) {
-                dancingLevelLocation = dancingLevelLocation - 1;
+            if (dancingLevelLocation >= 0) {
+                dancingLevelLocation = dancingLevelLocation - 1;    
+            }
         } else {
             startDancing();
             dKeyPressed = true;
@@ -725,7 +727,9 @@ $(document).click(function(e){
         loadDancingTimeout = window.setTimeout(switchToDanceScene, 700);
     } else if (clickedClass(e) == 'd-button' && currentScene=='dancescene' && pausedStatus !== 'paused') { // D key
         if (dKeyPressed == true) {
-                dancingLevelLocation = dancingLevelLocation - 1;
+            if (dancingLevelLocation >= 0) {
+                dancingLevelLocation = dancingLevelLocation - 1;    
+            }
         } else {
             startDancing();
             dKeyPressed = true;

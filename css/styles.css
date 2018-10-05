@@ -280,6 +280,11 @@ body {
 	height: 100%;
 }
 
+.title-scene img {
+margin: 0 auto;
+display: block;
+}
+
 .partys-over-scene {
 	display: none;
 	width: 100%;
@@ -307,44 +312,15 @@ body {
 }
 
 .special-message, .start-message {
-	padding: 5px;
-	background-color: #66bb53;
-	color: #000000;
+	padding: 10px;
+	border: 1px dashed #66bb53;
 }
 
-.blink_me {
-    -webkit-animation-name: blinker;
-    -webkit-animation-duration: 3s;
-    -webkit-animation-timing-function: linear;
-    -webkit-animation-iteration-count: infinite;
-
-    -moz-animation-name: blinker;
-    -moz-animation-duration: 3s;
-    -moz-animation-timing-function: linear;
-    -moz-animation-iteration-count: infinite;
-
-    animation-name: blinker;
-    animation-duration: 3s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
+@keyframes blink { 
+   50% { border-color: #000000; } 
 }
-
-@-moz-keyframes blinker {
-    /*0% { opacity: 1.0; }*/
-    50% { opacity: 0.0; }
-    /*100% { opacity: 2.0; }*/
-}
-
-@-webkit-keyframes blinker {
-    /*0% { opacity: 1.0; }*/
-    50% { opacity: 0.0; }
-    /*100% { opacity: 2.0; }*/
-}
-
-@keyframes blinker {
-    /*0% { opacity: 1.0; }*/
-    50% { opacity: 0.0; }
-    /*100% { opacity: 2.0; }*/
+.blink_me { /*or other element you want*/
+    animation: blink .5s step-end infinite alternate;
 }
 
 body > svg {

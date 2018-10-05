@@ -1,6 +1,7 @@
 var currentScene = 'titlescene';
 var pointTotal;
 var finalPoints;
+var countPointsInterval;
 
 pointTotal = 0;
 
@@ -8,12 +9,12 @@ pointCounter = function(event) {
 
     htmlCounter = $('.point-counter');
     if( event == 'gameover' ) {
-        clearInterval(countPoints);
+        clearInterval(countPointsInterval);
         clearInterval(sadnessInterval);
     } else if ( event == 'pause' ) {
-        clearInterval(countPoints);
+        clearInterval(countPointsInterval);
     } else {
-        countPoints = setInterval(function () {
+        countPointsInterval = setInterval(function () {
             pointTotal = pointTotal + 10;
             $(htmlCounter).html(pointTotal);
             if (pointTotal % 300 === 0) {
@@ -27,15 +28,15 @@ pointCounter = function(event) {
 }
 
 var dads; // generated SVG for dads only animation
-var loadDadsOnlyTimeout; //ID for timeout for loading dads only animation
-var loadDadsOnlyAudioTimeout;
+// var loadDadsOnlyTimeout; //ID for timeout for loading dads only animation
+// var loadDadsOnlyAudioTimeout;
 var loadPressSpacebarTimeout;
 
-animateDadsOnly = function() {
-    $('.dads-only').addClass('dads-only-final');
-    $('.dads-only-final').removeClass('dads-only');
-    loadDadsOnlyTimeout = window.setTimeout(dadsOnlyAudio, 1000);
-}
+// animateDadsOnly = function() {
+//     $('.dads-only').addClass('dads-only-final');
+//     $('.dads-only-final').removeClass('dads-only');
+//     loadDadsOnlyTimeout = window.setTimeout(dadsOnlyAudio, 1000);
+// }
 
 mainBackground = function() {
     openingScreen = s.rect('0','0','100%','100%');
@@ -72,7 +73,7 @@ openingScene = function(event) {
         $('.title-scene').hide();
     } else {
         $('.title-scene').show();
-        loadDadsOnlyTimeout = window.setTimeout(animateDadsOnly, 1500);
+        // loadDadsOnlyTimeout = window.setTimeout(animateDadsOnly, 1500);
         loadPressSpacebarTimeout = window.setTimeout(loadPressSpacebar, 3500);
     }
 }
@@ -204,16 +205,16 @@ danceAudio = function(status) {
     }
 }
 
-dadsOnlyChunk = new Audio('audio/dads-only.mp3');
+// dadsOnlyChunk = new Audio('audio/dads-only.mp3');
 
-dadsOnlyAudio = function(status) {
-    if(volumeStatus == 'off' || status == 'off') {
-        dadsOnlyChunk.volume = 0;
-    } else {
-        dadsOnlyChunk.play();
-        dadsOnlyChunk.volume = 0.7;
-    }
-}
+// dadsOnlyAudio = function(status) {
+//     if(volumeStatus == 'off' || status == 'off') {
+//         dadsOnlyChunk.volume = 0;
+//     } else {
+//         dadsOnlyChunk.play();
+//         dadsOnlyChunk.volume = 0.7;
+//     }
+// }
 
 dadScrollSound = new Audio('audio/dad-scroll.mp3');
 
@@ -245,7 +246,7 @@ titleSongAudio = function(status) {
         titleSongSound.volume = 0;
     } else {
         titleSongSound.play();
-        titleSongSound.volume = 0.3;
+        titleSongSound.volume = 0.6;
     }
 }
 
@@ -306,21 +307,28 @@ var pausedStatus;
 pauseGame = function() {
     if (pausedStatus === 'paused') { // the game is currently paused
         mambo5.play();
-        pointCounter();
         switchDanceMoves('resume');
         pausedStatus = 'unpaused';
 
         trackDancing.resume();
-
+        console.log(gameLevel);
         switch (gameLevel) {
             case 'start':
                 sadnessTimer.resume();
+                pointCounter();
                 break;
+            // case 'sadness':
+            //     break;
             case 'sadness2':
                 trackSadness.resume();
                 songsTimer.resume();
+                pointCounter();
+                break;
+            case 'songs':
+                trackSadness.resume();
                 break;
             case 'songs2':
+                pointCounter();
                 trackSadness.resume();
             default:
         }
@@ -339,12 +347,16 @@ pauseGame = function() {
         trackSadness.pause();
         // stop tracking dancing
         trackDancing.pause();
-        // pause sadness settimeout
-        sadnessTimer.pause();
+
         // if there is a songs timeout, pause it
         if(songsTimer !== undefined) {
             songsTimer.pause();
         }
+
+        if(beginSadness == true ) {
+            sadnessTimer.pause();
+        }
+
     }
 }
 
@@ -450,6 +462,8 @@ var dancingLevelLocation;
 // var dancingMeterLocation;
 // var dancingMeterDirection = 'right';
 // var dancingMeterInterval;
+var dancingLevelInterval;
+
 
 var trackDancing = {
 
@@ -524,6 +538,7 @@ var trackDancing = {
 gameLevel = 'start';
 var sadnessTimer;
 var songsTimer;
+var beginSadness;
 
 controlMessages = function() {
     switch (gameLevel) {
@@ -535,6 +550,7 @@ controlMessages = function() {
             // }, 10000);
             sadnessTimer = new Timer(function() {
                 gameLevel = 'sadness';
+                beginSadness = true;
                 controlMessages();
             }, 10000);
             break;
@@ -696,7 +712,7 @@ $(document).keydown(function(e){
     } else if (e.which==82 && currentScene=='dancescene') { // R key
         mambo5.currentTime = 0;
         danceAudio();
-    } else if (e.which==80 && currentScene=='dancescene') { // P key
+    } else if (e.which==80 && currentScene=='dancescene' && currentlyDancing == true) { // P key
         pauseGame();
     }
     else if (e.which==32 && currentScene=='partysoverscene') { // space bar
@@ -739,7 +755,7 @@ $(document).on('touchstart', function(e){
     } else if (clickedClass(e) == 'r-button' && currentScene=='dancescene') { // R key
         mambo5.currentTime = 0;
         danceAudio();
-    } else if (clickedClass(e) == 'p-button' && currentScene=='dancescene') { // P key
+    } else if (clickedClass(e) == 'p-button' && currentScene=='dancescene' && currentlyDancing==true) { // P key
         pauseGame();
     }
     else if (clickedClass(e) == 'space-bar' && currentScene=='partysoverscene') { // space bar

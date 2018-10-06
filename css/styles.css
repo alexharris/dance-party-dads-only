@@ -329,8 +329,8 @@ body {
 	border: 4px dotted #66bb53;
 }
 
-@keyframes blink { 
-   50% { border-color: #000000; } 
+@keyframes blink {
+   50% { border-color: #000000; }
 }
 .blink_me { /*or other element you want*/
     animation: blink .5s step-end infinite alternate;
@@ -352,6 +352,14 @@ body > svg {
 	padding-top: 20px;
 	margin-top: 40px;
 	font-size: .8em;
+}
+
+.credits a {
+	color: #66bb53;
+}
+
+.credits a:hover {
+	text-decoration: none;
 }
 
 @media only screen and (max-device-width: 700px){

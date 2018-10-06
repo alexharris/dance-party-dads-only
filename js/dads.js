@@ -2,6 +2,7 @@ var currentScene = 'titlescene';
 var pointTotal;
 var finalPoints;
 var countPointsInterval;
+var reasonForLoss;
 
 pointTotal = 0;
 
@@ -422,8 +423,10 @@ var trackSadness = {
             $('.sadness-level').css('width', sadnessLevel * 10 + '%');
 
             if (sadnessLevel > 10) {
+              reasonForLoss = "You got bored!";
               switchToPartysOverScene();
               pointCounter('gameover');
+              
             }
 
         }, 20);
@@ -446,10 +449,11 @@ trackSongs = function(e) {
             $('.song-level').css('width', songPercentage + '%');
 
             if (songPercentage > 99) {
-
+                reasonForLoss = "The music ended!";
                 switchToPartysOverScene();
 
                 pointCounter('gameover');
+                
             }
         }
 
@@ -485,7 +489,9 @@ var trackDancing = {
                 if (dancingLevelLocation > 10) {
                     $('.dancing-level').css('width', '100%');
                     pointCounter('gameover');
+                    reasonForLoss = "You stopped dancing!";
                     switchToPartysOverScene();
+                    
                 }
             }, 10);
         },
@@ -666,6 +672,7 @@ switchToPartysOverScene = function() {
     clearInterval(writeMessage);
     $('.final-points').text('');
     $('.final-points').append($('.point-counter').text());
+    $('.reason-for-loss').prepend(reasonForLoss);
     currentScene = 'partysoverscene';
     $('.sadness-level').css('width', '100%');
     $('.song-level').css('width', '100%');
@@ -674,7 +681,9 @@ switchToPartysOverScene = function() {
     clearInterval(songInterval);
     trackDancing.clear();
     danceAudio('off');
+    console.log(reasonForLoss);
     playAgain();
+    $('.messages').empty();
 }
 
 // CONTROLS

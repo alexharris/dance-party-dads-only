@@ -298,6 +298,9 @@ startDancing = function() {
     pointCounter();
     trackDancing.resume(0);
     $('.start-message').hide();
+    setTimeout(function() {
+        $('.messages').append('<p class="special-message blink_me">KEEP TAPPING D! YOU\'RE DANCING!</p>');
+    }, 5000);
     currentlyDancing = true;
     controlMessages();
     switchDanceMoves('switch');
@@ -558,7 +561,7 @@ controlMessages = function() {
                 gameLevel = 'sadness';
                 beginSadness = true;
                 controlMessages();
-            }, 10000);
+            }, 12000);
             break;
         case 'sadness':
             clearInterval(writeMessage);
@@ -585,14 +588,13 @@ controlMessages = function() {
             pointCounter();
             writeMessages();
             trackSadness.resume(0);
-            // setTimeout(function() {
-            //     gameLevel = 'songs';
-            //     controlMessages();
-            // }, 15000);
+            setTimeout(function() {
+                $('.messages').append('<p class="special-message blink_me">DO NEW MOVES TO KEEP YOUR BOREDOM AT BAY</p>');
+            }, 3000);
             songsTimer = new Timer(function() {
                 gameLevel = 'songs';
                 controlMessages();
-            }, 15000);
+            }, 17000);
             break;
         case 'songs':
             console.log('entering songs');

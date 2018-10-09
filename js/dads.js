@@ -310,9 +310,8 @@ pauseGame = function() {
         mambo5.play();
         switchDanceMoves('resume');
         pausedStatus = 'unpaused';
-
         trackDancing.resume();
-        console.log(gameLevel);
+        $('.messages').empty();
         switch (gameLevel) {
             case 'start':
                 sadnessTimer.resume();
@@ -333,7 +332,6 @@ pauseGame = function() {
                 trackSadness.resume();
             default:
         }
-
 
     } else { // the game is currently going
         // pause music
@@ -358,6 +356,8 @@ pauseGame = function() {
             sadnessTimer.pause();
         }
 
+        $('.messages').empty();
+        $('.messages').append('PAUSED');
     }
 }
 
@@ -564,7 +564,7 @@ controlMessages = function() {
             clearInterval(writeMessage);
             pointCounter('pause');
             $('.messages').empty();
-            $('.messages').append('<p class="special-message blink_me">You grow bored of this dance. Press N to keep the sadness away. </p>');
+            $('.messages').append('<p class="special-message blink_me">You grow bored of this dance. Press N to keep the boredom down. </p>');
             $(document).keydown(function(e){
                 if(e.which==78 && currentScene=='dancescene' && currentlyDancing == true && gameLevel == 'sadness') { // press N key
                     gameLevel = 'sadness2';
